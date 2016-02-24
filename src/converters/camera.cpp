@@ -53,7 +53,7 @@ const sensor_msgs::CameraInfo& getEmptyInfo()
   return cam_info_msg;
 }
 
-const sensor_msgs::CameraInfo& getCameraInfo( int camera_source, int resolution )
+const sensor_msgs::CameraInfo& getCameraInfo( int camera_source, int resolution, const bool withLenses=true)
 {
   /** RETURN VALUE OPTIMIZATION (RVO)
   * since there is no C++11 initializer list nor lamda functions
@@ -63,6 +63,11 @@ const sensor_msgs::CameraInfo& getCameraInfo( int camera_source, int resolution 
     if ( resolution == AL::kVGA )
     {
       static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoTOPVGA();
+      return cam_info_msg;
+    }
+    else if(( resolution == AL::kQVGA ) && (!withLenses))
+    {
+      static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoTOPQVGAPepper();
       return cam_info_msg;
     }
     else if( resolution == AL::kQVGA )
@@ -101,7 +106,12 @@ const sensor_msgs::CameraInfo& getCameraInfo( int camera_source, int resolution 
       static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoDEPTHVGA();
       return cam_info_msg;
     }
-    else if( resolution == AL::kQVGA )
+    else if(( resolution == AL::kQVGA ) && (!withLenses))
+    {
+      static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoDEPTHQVGAPepper();
+      return cam_info_msg;
+    }
+    else if(( resolution == AL::kQVGA ) )
     {
       static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoDEPTHQVGA();
       return cam_info_msg;
@@ -120,7 +130,7 @@ const sensor_msgs::CameraInfo& getCameraInfo( int camera_source, int resolution 
 
 } // camera_info_definitions
 
-CameraConverter::CameraConverter( const std::string& name, const float& frequency, const qi::SessionPtr& session, const int& camera_source, const int& resolution )
+CameraConverter::CameraConverter( const std::string& name, const float& frequency, const qi::SessionPtr& session, const int& camera_source, const int& resolution, const bool& withLenses )
   : BaseConverter( name, frequency, session ),
     p_video_( session->service("ALVideoDevice") ),
     camera_source_(camera_source),
@@ -129,8 +139,9 @@ CameraConverter::CameraConverter( const std::string& name, const float& frequenc
     colorspace_( (camera_source_!=AL::kDepthCamera)?AL::kRGBColorSpace:AL::kDepthColorSpace ),
     msg_colorspace_( (camera_source_!=AL::kDepthCamera)?"rgb8":"16UC1" ),
     cv_mat_type_( (camera_source_!=AL::kDepthCamera)?CV_8UC3:CV_16U ),
-    camera_info_( camera_info_definitions::getCameraInfo(camera_source, resolution) )
+    camera_info_( camera_info_definitions::getCameraInfo(camera_source, resolution, withLenses) )
 {
+
   if ( camera_source == AL::kTopCamera )
   {
     msg_frameid_ = "CameraTop_optical_frame";
@@ -142,6 +153,8 @@ CameraConverter::CameraConverter( const std::string& name, const float& frequenc
   else if (camera_source_ == AL::kDepthCamera )
   {
     msg_frameid_ = "CameraDepth_optical_frame";
+    if ( !withLenses )
+      colorspace_ = AL::kRawColorSpace;
   }
   // Overwrite the parameters for the infrared
   else if (camera_source_ == AL::kInfraredCamera )

@@ -72,6 +72,25 @@ inline sensor_msgs::CameraInfo createCameraInfoTOPQVGA()
   return cam_info_msg;
 }
 
+inline sensor_msgs::CameraInfo createCameraInfoTOPQVGAPepper()
+{
+  sensor_msgs::CameraInfo cam_info_msg;
+
+  cam_info_msg.header.frame_id = "CameraTop_optical_frame";
+
+  cam_info_msg.width = 320;
+  cam_info_msg.height = 240;
+  cam_info_msg.K = boost::array<double, 9>{{ 292.2001444585798, 0.0, 159.87738419591204, 0.0, 291.36512840511693, 118.4116998822828, 0.0, 0.0, 1.0 }};
+
+  cam_info_msg.distortion_model = "plumb_bob";
+  cam_info_msg.D = boost::assign::list_of(0.019517551986637755)(-0.16455883726939335)(0.0014704035994650678)(-0.0001590659187736515)(0.0).convert_to_container<std::vector<double> >();
+
+  cam_info_msg.R = boost::array<double, 9>{{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }};
+
+  cam_info_msg.P = boost::array<double, 12>{{ 288.55267333984375, 0.0, 159.32661485617064, 0.0, 0.0, 289.7435607910156, 118.11884821555395, 0.0, 0.0, 0.0, 1.0, 0.0 }};
+
+  return cam_info_msg;
+}
 
 inline sensor_msgs::CameraInfo createCameraInfoTOPQQVGA()
 {
@@ -173,8 +192,8 @@ inline sensor_msgs::CameraInfo createCameraInfoDEPTHVGA()
   cam_info_msg.height = 480;
   cam_info_msg.K = boost::array<double, 9>{{ 525, 0, 319.5000000, 0, 525, 239.5000000000000, 0, 0, 1  }};
 
-  //cam_info_msg.distortion_model = "plumb_bob";
-  //cam_info_msg.D = boost::assign::list_of(-0.0688388724945936)(0.0697453843669642)(0.00309518737071049)(-0.00570486993696543)(0);
+  cam_info_msg.distortion_model = "plumb_bob";
+  cam_info_msg.D = boost::assign::list_of(-0.0688388724945936)(0.0697453843669642)(0.00309518737071049)(-0.00570486993696543)(0);
 
   cam_info_msg.R = boost::array<double, 9>{{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }};
 
@@ -194,12 +213,32 @@ inline sensor_msgs::CameraInfo createCameraInfoDEPTHQVGA()
   cam_info_msg.height = 240;
   cam_info_msg.K = boost::array<double, 9>{{ 525/2.0f, 0, 319.5000000/2.0f, 0, 525/2.0f, 239.5000000000000/2.0f, 0, 0, 1  }};
 
-  //cam_info_msg.distortion_model = "plumb_bob";
-  //cam_info_msg.D = boost::assign::list_of(-0.0688388724945936)(0.0697453843669642)(0.00309518737071049)(-0.00570486993696543)(0);
+  cam_info_msg.distortion_model = "plumb_bob";
+  cam_info_msg.D = boost::assign::list_of(-0.0688388724945936)(0.0697453843669642)(0.00309518737071049)(-0.00570486993696543)(0);
 
   cam_info_msg.R = boost::array<double, 9>{{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }};
 
   cam_info_msg.P = boost::array<double, 12>{{ 525/2.0f, 0, 319.500000/2.0f, 0, 0, 525/2.0f, 239.5000000000/2.0f, 0, 0, 0, 1, 0 }};
+
+  return cam_info_msg;
+}
+
+inline sensor_msgs::CameraInfo createCameraInfoDEPTHQVGAPepper()
+{
+  sensor_msgs::CameraInfo cam_info_msg;
+
+  cam_info_msg.header.frame_id = "CameraDepth_optical_frame";
+
+  cam_info_msg.width = 320;
+  cam_info_msg.height = 240;
+  cam_info_msg.K = boost::array<double, 9>{{ 280.9263523583125, 0.0, 157.4614566053691, 0.0, 280.1872353270472, 122.15035505105976, 0.0, 0.0, 1.0 }};
+
+  cam_info_msg.distortion_model = "plumb_bob";
+  cam_info_msg.D = boost::assign::list_of(-0.034735562070430714) (-5.3482411530691917e-05) (0.003069418585258507) (-0.00042019079784534505) (0.0);
+
+  cam_info_msg.R = boost::array<double, 9>{{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }};
+
+  cam_info_msg.P = boost::array<double, 12>{{ 276.89691162109375, 0.0, 156.8604785506468, 0.0, 0.0, 277.0999450683594, 122.17943230681158, 0.0, 0.0, 0.0, 1.0, 0.0 }};
 
   return cam_info_msg;
 }
@@ -214,8 +253,8 @@ inline sensor_msgs::CameraInfo createCameraInfoDEPTHQQVGA()
   cam_info_msg.height = 120;
   cam_info_msg.K = boost::array<double, 9>{{ 525/4.0f, 0, 319.5000000/4.0f, 0, 525/4.0f, 239.5000000000000/4.0f, 0, 0, 1  }};
 
-  //cam_info_msg.distortion_model = "plumb_bob";
-  //cam_info_msg.D = boost::assign::list_of(-0.0688388724945936)(0.0697453843669642)(0.00309518737071049)(-0.00570486993696543)(0);
+  cam_info_msg.distortion_model = "plumb_bob";
+  cam_info_msg.D = boost::assign::list_of(-0.0688388724945936)(0.0697453843669642)(0.00309518737071049)(-0.00570486993696543)(0);
 
   cam_info_msg.R = boost::array<double, 9>{{ 1, 0, 0, 0, 1, 0, 0, 0, 1 }};
 
