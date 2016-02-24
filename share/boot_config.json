@@ -82,6 +82,10 @@
     {
       "enabled"       : true
     }
+    "people":
+    {
+      "enabled"       : true
+    }
   }
 }
 
