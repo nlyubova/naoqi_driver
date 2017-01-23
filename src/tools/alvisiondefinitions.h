@@ -54,6 +54,7 @@ namespace AL
   const int k1080p = 6;  //1920*1080
   const int kQQQVGA = 7;  // 80*60
   const int kQQQQVGA = 8;  // 40*30
+  const int kQ720p = 9;  // 640*360
 
   const int kYuvColorSpace = 0;
   const int kyUvColorSpace = 1;

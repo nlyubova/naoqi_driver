@@ -111,6 +111,16 @@ const sensor_msgs::CameraInfo& getCameraInfo( int camera_source, int resolution 
       static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoDEPTHQQVGA();
       return cam_info_msg;
     }
+    else if( resolution == AL::k720p )
+    {
+      static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoDEPTHQQVGA();
+      return cam_info_msg;
+    }
+    else if( resolution == AL::kQ720p )
+    {
+      static const sensor_msgs::CameraInfo cam_info_msg = createCameraInfoDEPTHQQVGA();
+      return cam_info_msg;
+    }
   }
   else{
     std::cout << "no camera information found for camera_source " << camera_source << " and res: " << resolution << std::endl;
@@ -126,7 +136,7 @@ CameraConverter::CameraConverter( const std::string& name, const float& frequenc
     camera_source_(camera_source),
     resolution_(resolution),
     // change in case of depth camera
-    colorspace_( (camera_source_!=AL::kDepthCamera)?AL::kRGBColorSpace:AL::kRawDepthColorSpace ),
+    colorspace_( (camera_source_!=AL::kDepthCamera)?AL::kRGBColorSpace:AL::kDepthColorSpace),
     msg_colorspace_( (camera_source_!=AL::kDepthCamera)?"rgb8":"16UC1" ),
     cv_mat_type_( (camera_source_!=AL::kDepthCamera)?CV_8UC3:CV_16U ),
     camera_info_( camera_info_definitions::getCameraInfo(camera_source, resolution) )
